@@ -1,19 +1,43 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+// Import screens
+import PhoneNumber from './screens/phoneNumber'
+import OTP from './screens/OTP';
+import GeneralDetails from './screens/GeneralDetails';
+import SelectSchool from './screens/SelectSchool';
+import SelectHostel from './screens/SelectHostel';
+import Home from './screens/Home';
+import SelectCylinder from './screens/SelectCylinder';
+import ConfirmLocation from './screens/ConfirmLocation';
+import Amount from './screens/Amount';
+import MobileMoney from './screens/MobileMoney';
+import Tracker from './screens/Tracker';
+
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
 root.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Routes>
+        <Route path="/" element={<PhoneNumber />} />
+        <Route path="/otp" element={<OTP />} />
+        <Route path="/GeneralDetails" element={<GeneralDetails />} />
+        <Route path="/SelectSchool" element={<SelectSchool />} />
+        <Route path="/SelectHostel" element={<SelectHostel />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/SelectCylinder" element={<SelectCylinder />} />
+        <Route path="/ConfirmLocationn" element={<ConfirmLocation />} />
+        <Route path="/amount" element={<Amount />} />
+        <Route path="/MobileMoney" element={<MobileMoney />} />
+        <Route path="/tracker" element={<Tracker />} />
+      </Routes>
+    </Router>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// Report web vitals (for performance tracking)
 reportWebVitals();
