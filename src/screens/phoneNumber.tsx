@@ -13,41 +13,41 @@ function App() {
   const isButtonDisabled = phoneNumber.length < 10; // Disable button if phone number is too short
 
   const requestOTP = async () => {
-    // if (!phoneNumber || phoneNumber.length < 10) {
-    //   alert('Please enter a valid phone number.'); // Use alert for the web
-    //   return;
-    // }
+    if (!phoneNumber || phoneNumber.length < 10) {
+      alert('Please enter a valid phone number.'); // Use alert for the web
+      return;
+    }
 
-    // setLoading(true); // Start loading
+    setLoading(true); // Start loading
 
-    // try {
-    //   const response = await fetch(`${BASE_CUSTOMER_URL}/request-otp/`, {
-    //     method: 'POST',
-    //     headers: {
-    //       Accept: 'application/json',
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //       phone_number: phoneNumber,
-    //       account_type: 'customer',
-    //     }),
-    //   });
+    try {
+      const response = await fetch(`${BASE_CUSTOMER_URL}/request-otp/`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          phone_number: phoneNumber,
+          account_type: 'customer',
+        }),
+      });
 
-    //   const data = await response.json();
+      const data = await response.json();
 
-    //   if (response.ok) {
-    //     setVerificationId(data.verificationId); // Store the verification ID
-    //     navigate('OTP', { state: { verificationId: data.verificationId } }); // Pass verificationId in state
-    //     console.log(phoneNumber)
-    //   } else {
-    //     alert('Could not send OTP. Please try again.'); // Show alert in case of failure
-    //   }
-    // } catch (error) {
-    //   setLoading(false); // Stop loading
-    //   console.error('Error requesting OTP:', error); // Log the error
-    //   alert((error as Error).message || 'Could not send OTP.'); // Handle unknown error type
-    // }
-    navigate('/OTP');
+      if (response.ok) {
+        setVerificationId(data.verificationId); // Store the verification ID
+        navigate('OTP', { state: { verificationId: data.verificationId } }); // Pass verificationId in state
+        console.log(phoneNumber)
+      } else {
+        alert('Could not send OTP. Please try again.'); // Show alert in case of failure
+      }
+    } catch (error) {
+      setLoading(false); // Stop loading
+      console.error('Error requesting OTP:', error); // Log the error
+      alert((error as Error).message || 'Could not send OTP.'); // Handle unknown error type
+    }
+    // navigate('/OTP');
   };
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);

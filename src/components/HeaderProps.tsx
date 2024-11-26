@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-// import './PrimaryButton'
 
 interface HeaderProps {
   logoText?: string;
@@ -46,6 +45,11 @@ const Header: React.FC<HeaderProps> = ({
   };
 
   const isLandingPage = location.pathname === "/"; // Check if the current route is the landing page
+
+  // Filter out "Home" and "Orders" links on the landing page
+  const filteredMenuItems = isLandingPage
+    ? menuItems.filter((item) => item !== "Home" && item !== "Orders")
+    : menuItems;
 
   return (
     <div
@@ -108,7 +112,7 @@ const Header: React.FC<HeaderProps> = ({
               gap: 24,
             }}
           >
-            {menuItems.map((item, index) => (
+            {filteredMenuItems.map((item, index) => (
               <p
                 key={index}
                 style={{ color: "#ffffff70", cursor: "pointer" }}
@@ -130,7 +134,6 @@ const Header: React.FC<HeaderProps> = ({
         }}
       >
         {isLandingPage ? (
-          // <PrimaryButton/>
           <button
             style={{
               padding: "10px 20px",
@@ -143,10 +146,10 @@ const Header: React.FC<HeaderProps> = ({
             }}
             onClick={() => navigate("/PhoneNumber")} // Navigate to the Sign Up page
             onMouseEnter={(e) =>
-              (e.currentTarget.style.backgroundColor = '#ffffff60')
+              (e.currentTarget.style.backgroundColor = "#ffffff60")
             }
             onMouseLeave={(e) =>
-              (e.currentTarget.style.backgroundColor = '#ffffff')
+              (e.currentTarget.style.backgroundColor = "#ffffff")
             }
           >
             Sign Up
@@ -154,7 +157,6 @@ const Header: React.FC<HeaderProps> = ({
         ) : (
           <>
             <svg
-              // onClick={onNotificationClick}
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
