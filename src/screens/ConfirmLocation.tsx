@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PrimaryButtom from '../components/PrimaryButton'
 import UPSA from './../../public/UPSA.png'
 import PUC from './../../public/Pentecost-University-College 1.png'
 import Header from './../components/HeaderProps'
+import { useNavigate } from 'react-router-dom';
 
 function ConfirmLocation() {
+
+  const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  // Listener for screen size changes
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+
+  const handleContinue = () => {
+    navigate('/Amount'); 
+  };
+
   return (
     <div
       style={{
@@ -31,9 +49,20 @@ function ConfirmLocation() {
            flexDirection: 'column',
            alignItems : 'flex-start',
            gap : 4,
-           width : 313
+           width : isMobile ?  380 : 313,
+           justifyContent : 'space-between',
+           height : isMobile ? '100%' : 0,
+           marginBottom : isMobile ? 30 : 0
       }}>
-      <div
+
+
+     <div style={{
+       display: 'flex',
+       flexDirection: 'column',
+       alignItems : 'flex-start',
+       gap : 12,
+     }}>
+     <div
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -136,6 +165,7 @@ function ConfirmLocation() {
         </div>
 
       </div>
+     </div>
 
       <div style={{
         width : '100%',
@@ -210,7 +240,7 @@ function ConfirmLocation() {
             fontSize : 14
           }}>n/a</p>
         </div>
-          <PrimaryButtom title='Continue'/>
+          <PrimaryButtom title='Continue' onClick={handleContinue}/>
       </div>
 
 

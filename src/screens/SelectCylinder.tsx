@@ -1,20 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PrimaryButtom from '../components/PrimaryButton'
 import UPSA from './../../public/UPSA.png'
 import PUC from './../../public/Pentecost-University-College 1.png'
 import SecondaryButton from './../components/SecondaryButton'
 import Header from './../components/HeaderProps'
+import { useNavigate } from 'react-router-dom';
 
 function SelectCylinder() {
+
+  
+  const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  // Listener for screen size changes
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  const handleContinue = () => {
+    navigate('/ConfirmLocation'); 
+  };
+
   return (
     <div
       style={{
         flex: 1,
         alignItems: 'center',
-        display: 'flex',
+        display: 'flex', 
         height: '100vh',
         flexDirection : 'column',
-        gap: "10%",
+        gap: isMobile ? "5%" : '10%',
       }}
     >
 
@@ -51,92 +69,62 @@ function SelectCylinder() {
    
       </div>
 
-      <div style={{
+      <div
+  style={{
+    display: 'flex',
+    flexDirection: isMobile ? 'column' : 'row', // Stacks vertically on mobile
+    gap: 24,
+    width: '100%',
+    justifyContent: isMobile ? 'center' : 'flex-start', // Adjust alignment for mobile
+    
+  }}
+>
+  {[
+    { size: 'Small Size', price: 'GH 3.00', imgSrc: '/small.png' },
+    { size: 'Medium Size', price: 'GH 6.00', imgSrc: '/medium.png' },
+  ].map((cylinder, index) => (
+    <div
+      key={index}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        padding: 12,
+        border: '1px solid rgba(0,0,0,0.1)',
+        borderRadius: 24,
+        alignItems: 'flex-start',
+        width: isMobile ? 360 : 330, // Full-width on mobile
+        gap: 8
+      }}
+    >
+      <div
+        style={{
+          height: 188,
+          width: '100%',
+          
+          backgroundColor: '#FAFAFA',
+          borderRadius: 18,
           display: 'flex',
-          flexDirection: 'column',
-          alignItems : 'flex-start',
-          width : '100%',
-          gap : 12,
-        
-      }}>
-
-        <p style={{
-          fontWeight : '700'
-        }}>
-        Select LPG Cylinder Size
-        </p>
-
-        <div style={{
-          overflow : 'hidden',
-          display : 'flex',
-          gap : 24,
-        }}>
-          <div style={{
-            display : 'flex',
-            gap : 12,
-            flexDirection : 'column',
-            padding : 8,
-            border : '1px solid rgba(0,0,0,0.1)',
-            borderRadius : 24
-          }}>
-              <div style={{
-                display : 'flex',
-                height : 188,
-                width : 310,
-                backgroundColor : '#FAFAFA',
-                borderRadius : 18,
-                alignItems : 'center',
-                justifyContent : 'center'
-              }}>
-                <img src="/small.png" alt="" />
-              </div>
-              <div style={{
-                display : 'flex',
-                alignItems : 'center',
-                justifyContent : 'space-between'
-              }}>
-                <p>Small Size</p>
-                <p style={{
-                  color : 'rgba(0,0,0,0.5)'
-                }}>GH 3.00</p>
-              </div>
-                <SecondaryButton title='Select' />
-          </div>
-          <div style={{
-            display : 'flex',
-            gap : 12,
-            flexDirection : 'column',
-            padding : 8,
-            border : '1px solid rgba(0,0,0,0.1)',
-            borderRadius : 24
-          }}>
-              <div style={{
-                display : 'flex',
-                height : 188,
-                width : 310,
-                backgroundColor : '#FAFAFA',
-                borderRadius : 18,
-                alignItems : 'center',
-                justifyContent : 'center'
-              }}>
-                <img src="/medium.png" alt="" />
-              </div>
-              <div style={{
-                display : 'flex',
-                alignItems : 'center',
-                justifyContent : 'space-between'
-              }}>
-                <p>Medium Size</p>
-                <p style={{
-                  color : 'rgba(0,0,0,0.5)'
-                }}>GH 6.00</p>
-              </div>
-                <SecondaryButton title='Select' />
-          </div>
-
-        </div>
-
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <img src={cylinder.imgSrc} alt={`${cylinder.size} image`} />
       </div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%',
+        }}
+      >
+        <p>{cylinder.size}</p>
+        <p style={{ color: 'rgba(0,0,0,0.5)' }}>{cylinder.price}</p>
+      </div>
+      <SecondaryButton title="Select" onClick={handleContinue}  />
+    </div>
+  ))}
+</div>
+
   
 
       </div>

@@ -16,27 +16,34 @@ import ConfirmLocation from './screens/ConfirmLocation';
 import Amount from './screens/Amount';
 import MobileMoney from './screens/MobileMoney';
 import Tracker from './screens/Tracker';
+import { HostelProvider } from './screens/HostelContext';
+import LandingPage from './screens/LandingPage';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
-  <React.StrictMode>
+  <HostelProvider>
+        <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/" element={<PhoneNumber />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/PhoneNumber" element={<PhoneNumber />} />
         <Route path="/otp" element={<OTP />} />
         <Route path="/GeneralDetails" element={<GeneralDetails />} />
         <Route path="/SelectSchool" element={<SelectSchool />} />
         <Route path="/SelectHostel" element={<SelectHostel />} />
         <Route path="/home" element={<Home />} />
         <Route path="/SelectCylinder" element={<SelectCylinder />} />
-        <Route path="/ConfirmLocationn" element={<ConfirmLocation />} />
+        <Route path="/ConfirmLocation" element={<ConfirmLocation />} />
         <Route path="/amount" element={<Amount />} />
         <Route path="/MobileMoney" element={<MobileMoney />} />
         <Route path="/tracker" element={<Tracker />} />
       </Routes>
     </Router>
   </React.StrictMode>
+  </HostelProvider>
+
 );
 
 // Report web vitals (for performance tracking)

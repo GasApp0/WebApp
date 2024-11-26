@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PrimaryButtom from '../components/PrimaryButton'
 import UPSA from './../../public/UPSA.png'
 import PUC from './../../public/Pentecost-University-College 1.png'
@@ -6,6 +6,17 @@ import ProgressBar from '../components/ProgressBar';
 import Header from './../components/HeaderProps'
 
 function Tracker() {
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  // Listener for screen size changes
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div
       style={{
@@ -14,7 +25,7 @@ function Tracker() {
         display: 'flex',
         height: '100vh',
         flexDirection : 'column',
-        gap: "5%"
+        gap: "4%"
       }}
     >
 
@@ -31,7 +42,7 @@ function Tracker() {
            display: 'flex',
            flexDirection: 'column',
            gap : 24,
-           width : 340,
+           width : isMobile ?  380 : 313,
            alignItems: 'center',
       }}>
         
@@ -157,16 +168,13 @@ function Tracker() {
                
                 
             }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M8.0933 5.08008H4.57997C3.33997 5.08008 3.05997 5.70009 2.90664 6.46676L2.33997 9.16675H10.34L9.77331 6.46676C9.60664 5.70009 9.3333 5.08008 8.0933 5.08008Z" stroke="black" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M11.3267 13.5735C11.38 14.1602 10.9133 14.6668 10.3133 14.6668H9.37333C8.83333 14.6668 8.76 14.4335 8.66 14.1535L8.56 13.8535C8.42 13.4468 8.32667 13.1668 7.60667 13.1668H5.04667C4.32667 13.1668 4.22 13.4802 4.09333 13.8535L3.99334 14.1535C3.9 14.4402 3.82667 14.6668 3.28 14.6668H2.34C1.74 14.6668 1.26667 14.1602 1.32667 13.5735L1.60667 10.5268C1.68 9.77348 1.82 9.16016 3.13333 9.16016H9.51334C10.8267 9.16016 10.9667 9.77348 11.04 10.5268L11.3267 13.5735Z" stroke="black" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M2.33331 7.66699H1.83331" stroke="black" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M10.8333 7.66699H10.3333" stroke="black" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M3.33331 11.167H4.83331" stroke="black" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M7.83331 11.167H9.33331" stroke="black" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12.4733 5.82677C12.66 5.39344 12.5933 4.80678 12.2467 4.29345C11.9067 3.78012 11.3867 3.49345 10.9133 3.50011" stroke="black" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M14.5467 6.48682C14.8267 5.48015 14.6267 4.24684 13.9133 3.18018C13.2 2.11351 12.1333 1.46016 11.0933 1.3335" stroke="black" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M2.33331 14.6663V3.33301C2.33331 1.99967 3.22665 1.33301 4.33331 1.33301H9.66665C10.7733 1.33301 11.6666 1.99967 11.6666 3.33301V14.6663H2.33331Z" stroke="black" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M1.33331 14.667H12.6666" stroke="black" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M5.59331 6.66714H8.41331C9.10665 6.66714 9.67331 6.33381 9.67331 5.40715V4.58715C9.67331 3.66048 9.10665 3.32715 8.41331 3.32715H5.59331C4.89998 3.32715 4.33331 3.66048 4.33331 4.58715V5.40715C4.33331 6.33381 4.89998 6.66714 5.59331 6.66714Z" stroke="black" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4.33331 8.66699H6.33331" stroke="black" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M11.6667 10.6733L14.6667 10.6667V6.66667L13.3334 6" stroke="black" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
             </div>
 
             <div style={{

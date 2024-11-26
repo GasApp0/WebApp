@@ -1,10 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PrimaryButtom from '../components/PrimaryButton'
 import UPSA from './../../public/UPSA.png'
 import PUC from './../../public/Pentecost-University-College 1.png'
 import Header from './../components/HeaderProps'
+import { useNavigate } from 'react-router-dom';
+
 
 function Amount() {
+
+  const navigate = useNavigate();
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  // Listener for screen size changes
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const handleContinue = () => {
+    navigate('/MobileMoney'); 
+  };
+
   return (
     <div
       style={{
@@ -13,7 +32,7 @@ function Amount() {
         display: 'flex',
         height: '100vh',
         flexDirection : 'column',
-        gap: "10%"
+        gap: isMobile ?  "4%" : '10%'
       }}
     >
 
@@ -27,18 +46,22 @@ function Amount() {
     />
 
       <div style={{
-           display: 'flex',
-           flexDirection: 'column',
-           alignItems : 'flex-start',
-           gap : 16,
-           width : 313,
-           
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems : 'flex-start',
+      gap : 4,
+      width : isMobile ?  380 : 313,
+      justifyContent : 'space-between',
+      height : isMobile ? '100%' : 0,
+      marginBottom : isMobile ? 30 : 0
       }}>
       <div
+
         style={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems : 'flex-start'
+          alignItems : 'flex-start',
+          width : '100%'
         }}
       >
         <h1
@@ -47,26 +70,23 @@ function Amount() {
                 fontWeight : '700'
           }}
         >
-          Confirm Location
+          Amount
         </h1>
-   
-      </div>
-
+          
       <div style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems : 'flex-start',
           width : '100%',
           gap : 12,
-        
       }}>
         
         <div style={{
-          gap : 4,
+          gap : 12,
           display : 'flex',
           flexDirection : 'column',
           width : '100%',
-          
+        
         }}>
             <p>Enter Amount You Want To Buy</p>
             <input style={{
@@ -78,10 +98,9 @@ function Amount() {
             width : '100%'
           }}/>
         </div> 
-
-    
-
       </div>
+      </div>
+
 
       <div style={{
         width : '100%',
@@ -157,7 +176,7 @@ function Amount() {
             fontSize : 14
           }}>GH65.00</p>
         </div>
-          <PrimaryButtom title='Continue'/>
+        <PrimaryButtom title='Continue' onClick={handleContinue}/>
       </div>
 
       </div>

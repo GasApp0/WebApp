@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PrimaryButtom from '../components/PrimaryButton'
 import UPSA from './../../public/UPSA.png'
 import PUC from './../../public/Pentecost-University-College 1.png'
 import Header from './../components/HeaderProps'
+import { useNavigate } from 'react-router-dom';
 
 function MobileMoney() {
+  
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  // Listener for screen size changes
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const navigate = useNavigate();
+
+  const handleContinue = () => {
+    navigate('/Tracker'); 
+  };
+
   return (
     <div
       style={{
@@ -13,7 +31,7 @@ function MobileMoney() {
         display: 'flex',
         height: '100vh',
         flexDirection : 'column',
-        gap: "10%"
+        gap: isMobile ?  "4%" : '10%'
       }}
     >
         
@@ -27,18 +45,21 @@ function MobileMoney() {
         />
 
       <div style={{
-           display: 'flex',
-           flexDirection: 'column',
-           alignItems : 'flex-start',
-           gap : 16,
-           width : 313,
-           
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems : 'flex-start',
+        gap : 4,
+        width : isMobile ?  380 : 313,
+        justifyContent : 'space-between',
+        height : isMobile ? '100%' : 0,
+        marginBottom : isMobile ? 30 : 0
       }}>
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems : 'flex-start'
+          alignItems : 'flex-start',
+          gap : 24
         }}
       >
         <h1
@@ -49,10 +70,8 @@ function MobileMoney() {
         >
           Mobile Money Number
         </h1>
-   
-      </div>
 
-      <div style={{
+        <div style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems : 'flex-start',
@@ -124,6 +143,10 @@ function MobileMoney() {
     
 
       </div>
+   
+      </div>
+
+     
 
       <div style={{
         width : '100%',
@@ -199,7 +222,7 @@ function MobileMoney() {
             fontSize : 14
           }}>GH65.00</p>
         </div>
-          <PrimaryButtom title='Continue'/>
+        <PrimaryButtom title='Continue' onClick={handleContinue}/>
       </div>
 
       </div>
