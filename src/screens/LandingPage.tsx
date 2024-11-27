@@ -31,7 +31,7 @@ function LandingPage() {
         // height: '100vh',
         flexDirection: 'column',
         gap: isMobile ? '5%' : '10%',
-        // padding: isMobile ? '10px' : '0',
+        // paddingLeft: isMobile ? '10px' : '0',
         // marginLeft : isMobile ? '12%' : '0'
       }}
     >
@@ -75,9 +75,9 @@ function LandingPage() {
 
       <div style={{
         backgroundColor : '#fafafa',
-        width : '90%',
-        height : 720,
-        marginTop : "10%",
+        // width : isMobile ? '130%' : '90%',
+        height : isMobile ? 680 :  720,
+        marginTop : isMobile? '30%' : "10%",
         borderRadius : 24,
         border : '1px solid rgba(0,0,0,0.1)',
         borderStyle : 'dashed',
@@ -86,7 +86,12 @@ function LandingPage() {
         flexDirection : 'column',
         alignItems : 'center',
         gap : 40,
-        overflow : 'hidden'
+        overflow : 'hidden',
+        marginInline : isMobile ? '7%' : 0,
+        position : 'relative',
+        // left : '-10%'
+        paddingInline : '12%',
+        
       }}>
 
         <div style={{
@@ -134,7 +139,8 @@ function LandingPage() {
           paddingBlock : 8,
           gap : 12,
           border: '1px solid rgba(0,0,0,0.06)',
-          marginBottom : 54
+          marginBottom : 54,
+          height : 900
         }}>
           <div style={{
             display : 'flex',
@@ -411,11 +417,12 @@ function LandingPage() {
       <div style={{
         display : 'flex',
         marginBlock : 54,
-        marginInline : 24,
         flexDirection : 'row',
-        gap : 54,
         alignItems : 'center',
-        justifyContent : 'center',
+        // backgroundColor : 'red',
+        justifyContent : 'space-between',
+        width : isMobile ? '100%' : '40%',
+        marginLeft : isMobile ? '10%' : 0
       }}>
 
       <svg xmlns="http://www.w3.org/2000/svg" width="186" height="50" viewBox="0 0 186 86" fill="none">
@@ -450,36 +457,50 @@ function LandingPage() {
         gap : 60,
         display : 'flex',
         flexDirection : 'column',
-    
+        position : 'relative',
+        // left : '-5%'
       }}>
           <p style={{
             fontSize : 40,
-            fontWeight : '700'
-          }}>Discover the <span style={{
+            fontWeight : '700',
+            marginInline : isMobile ? '1%' : '20%',
+            textAlign : 'center'
+          }}>Discover the Our <span style={{
             padding : 2,
             backgroundColor : 'rgba(0,0,0,0.6)',
             color : 'white',
             borderRadius : 8
-          }}>Our Benefits✨</span></p>
+          }}>Benefits✨</span></p>
 
           <div style={{
             display: 'flex',
             flexDirection : 'column',
-            gap : 70
+            gap : 70,
+            alignItems : 'center',
+            justifyContent : 'center',
+            width : '100%',
+            position : 'relative',
+            left : '-5%'
+
           }}>
 
             <div style={{
-              display : 'flex',
-              flexDirection : 'column',
-              gap : 60,
-              width : 635,
-              height : 520,
-              borderRadius : 24,
-              border : '1px solid rgba(0,0,0,0.1)',
-              alignItems : 'center',
-              justifyContent : 'center',
-              padding: 70,
-              backgroundColor : '#fafafa'
+                display : 'flex',
+                flexDirection : 'column',
+                gap : 60,
+                // width : 615,
+                height : isMobile ? 560 : 620,
+                borderRadius : 24,
+                border : '1px solid rgba(0,0,0,0.1)',
+                alignItems : 'center',
+                // justifyContent : 'center',
+                padding: 70,
+                backgroundColor : '#fafafa',
+                paddingTop : '10%',
+                overflow : 'hidden',
+                marginLeft : '10%',
+                // marginRight : '10%',
+                paddingInline : isMobile ? '11%' : '21%'
             }}>
 
               <div style={{
@@ -489,7 +510,7 @@ function LandingPage() {
                  alignItems : 'center',
                  justifyContent : 'center',
                 position : 'relative',
-                 top : "15%"
+                //  top : "10%"
               }}>
                 <p style={{
                   fontSize : 24,
@@ -518,7 +539,7 @@ function LandingPage() {
                 flexDirection : 'column',
                 alignItems : 'center',
               justifyContent : 'center',
-              bottom : '-10%'
+              bottom : '2%'
               }}>
 
 
@@ -702,19 +723,22 @@ function LandingPage() {
             </div>
 
             <div style={{
-                    display : 'flex',
-                    flexDirection : 'column',
-                    gap : 60,
-                    width : 635,
-                    height : 620,
-                    borderRadius : 24,
-                    border : '1px solid rgba(0,0,0,0.1)',
-                    alignItems : 'center',
-                    // justifyContent : 'center',
-                    padding: 70,
-                    backgroundColor : '#fafafa',
-                    paddingTop : '10%',
-                    overflow : 'hidden'
+                         display : 'flex',
+                         flexDirection : 'column',
+                         gap : 60,
+                         // width : 615,
+                         height : isMobile ? 680 : 620,
+                         borderRadius : 24,
+                         border : '1px solid rgba(0,0,0,0.1)',
+                         alignItems : 'center',
+                         // justifyContent : 'center',
+                         padding: 70,
+                         backgroundColor : '#fafafa',
+                         paddingTop : '10%',
+                         overflow : 'hidden',
+                         marginLeft : '10%',
+                         // marginRight : '10%',
+                         paddingInline : isMobile ? '10%' : '16%'
 
             }}>
 
@@ -736,7 +760,8 @@ function LandingPage() {
 
                 <p style={{
                   fontSize : 28,
-                  fontWeight : '700'
+                  fontWeight : '700',
+                  textAlign : 'center'
                 }}>Effortless Gas Refills with Precision</p>
 
                 <p style={{
@@ -922,19 +947,22 @@ function LandingPage() {
             </div>
 
             <div style={{
-                    display : 'flex',
-                    flexDirection : 'column',
-                    gap : 60,
-                    width : 635,
-                    height : 620,
-                    borderRadius : 24,
-                    border : '1px solid rgba(0,0,0,0.1)',
-                    alignItems : 'center',
-                    // justifyContent : 'center',
-                    padding: 70,
-                    backgroundColor : '#fafafa',
-                    paddingTop : '10%',
-                    overflow : 'hidden'
+                            display : 'flex',
+                            flexDirection : 'column',
+                            gap : 60,
+                            // width : 615,
+                            height : isMobile ? 680 : 620,
+                            borderRadius : 24,
+                            border : '1px solid rgba(0,0,0,0.1)',
+                            alignItems : 'center',
+                            // justifyContent : 'center',
+                            padding: 70,
+                            backgroundColor : '#fafafa',
+                            paddingTop : '10%',
+                            overflow : 'hidden',
+                            marginLeft : '10%',
+                            // marginRight : '10%',
+                            paddingInline : isMobile ? '10%' : '20%'
 
             }}>
 
@@ -944,7 +972,7 @@ function LandingPage() {
                  gap : 12,
                  alignItems : 'center',
                  justifyContent : 'center',
-                position : 'relative',
+                // position : 'relative',
               }}>
                 <p style={{
                   fontSize : 24,
@@ -958,8 +986,9 @@ function LandingPage() {
 
                 <p style={{
                   fontSize : 28,
-                  fontWeight : '700'
-                }}>Stay Updated, Every Step of the Way</p>
+                  fontWeight : '700',
+                  textAlign : 'center'
+                }}>Stay Updated, Every Step <br />of the Way</p>
 
                 <p style={{
                   fontSize : 14,
@@ -1242,12 +1271,13 @@ function LandingPage() {
             <div style={{
                 display : 'flex',
                 gap: 24,
+                flexDirection : isMobile ? 'column' : 'row',
             }}> 
             <div style={{
               width : 535,
               // height : 496,
             
-              borderRadius : 24,
+              borderRadius : isMobile ? 0 : 24,
               border : '1px solid rgba(0,0,0,0.1)',
               alignItems : 'center',
               gap : 40,
@@ -1255,7 +1285,8 @@ function LandingPage() {
               display : 'flex',
               flexDirection : 'column',
               paddingInline : 78,
-              paddingBlock: 50
+              paddingBlock: 50,
+              
 
             }}>
 
@@ -1434,7 +1465,7 @@ function LandingPage() {
               width : 535,
               // height : 496,
             
-              borderRadius : 24,
+              borderRadius : isMobile ? 0 : 24,
               border : '1px solid rgba(0,0,0,0.1)',
               alignItems : 'flex-start',
               gap : 40,
