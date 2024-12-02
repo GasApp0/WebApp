@@ -469,7 +469,7 @@ function LandingPage() {
           }}>Discover the Our <span style={{
             padding : 2,
             backgroundColor : 'rgba(0,0,0,0.6)',
-            color : 'white',
+            color : 'red',
             borderRadius : 8
           }}>Benefits✨</span></p>
 
