@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PrimaryButton from '../components/PrimaryButton';
 import { useNavigate } from 'react-router-dom';
 
+
 function App() {
   const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState(''); // Added state for phone number
@@ -47,7 +48,8 @@ function App() {
       console.error('Error requesting OTP:', error); // Log the error
       alert((error as Error).message || 'Could not send OTP.'); // Handle unknown error type
     }
-    // navigate('/OTP');
+    // navigate('/OTP', { state: { phoneNumber } } );
+    console.log(phoneNumber)
   };
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -62,7 +64,7 @@ function App() {
 
 
   return (
- <div
+    <div
       style={{
         display: 'flex',
         flexDirection: 'column',

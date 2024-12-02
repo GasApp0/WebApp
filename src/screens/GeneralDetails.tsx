@@ -4,10 +4,23 @@ import { useNavigate } from 'react-router-dom';
 
 function GeneralDetails() {
   const navigate = useNavigate();
+  const [firstName, setfirstName] = useState(''); 
+  const [lastName, setlastName] = useState(''); 
+  const [email, setEmail] = useState(''); 
 
-  const handleContinue = () => {
-    navigate('/SelectSchool');
+
+ const handleContinue = () => {
+    navigate('/SelectSchool', {
+      state: { 
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+      }
+    });
+    console.log('Navigating with:', { firstName, lastName, email });
   };
+
+ 
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -71,6 +84,8 @@ function GeneralDetails() {
           <div style={{ width: '100%' }}>
             <p>First Name</p>
             <input
+            value={firstName}
+            onChange={(e) => setfirstName(e.target.value)}
               style={{
                 backgroundColor: '#FAFAFA',
                 padding: 8,
@@ -83,6 +98,8 @@ function GeneralDetails() {
           <div style={{ width: '100%' }}>
             <p>Last Name</p>
             <input
+            value={lastName}
+            onChange={(e) => setlastName(e.target.value)}
               style={{
                 backgroundColor: '#FAFAFA',
                 padding: 8,
@@ -95,6 +112,8 @@ function GeneralDetails() {
           <div style={{ width: '100%' }}>
             <p>Email</p>
             <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
               style={{
                 backgroundColor: '#FAFAFA',
                 padding: 8,

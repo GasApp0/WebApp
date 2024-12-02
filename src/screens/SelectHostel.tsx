@@ -11,16 +11,20 @@ interface Hostel {
   schoolName: string;
 }
 
+interface LocationState {
+  firstName: string;
+  lastName: string;
+  email: string;
+  schoolName: string;
+}
 
 
-// Define types for the props of HostelList
 interface HostelListProps {
   searchQuery: string;
   onSelectHostel: (hostel: Hostel) => void;
-  selectedHostel: Hostel | null; // Add this line
+  selectedHostel: Hostel | null; 
 }
 
-// HostelList Component to filter and display the hostel options
 const HostelList: React.FC<HostelListProps> = ({ searchQuery, onSelectHostel, selectedHostel }) => {
   const hostels = [
     { id: '10', schoolId: '2', name: 'Anodams Hostel', schoolName: 'The University of Professional Studies (UPSA)' },
@@ -45,11 +49,20 @@ const HostelList: React.FC<HostelListProps> = ({ searchQuery, onSelectHostel, se
     { id: '3', schoolId: '2', name: 'Prestige Hostel', schoolName: 'The University of Professional Studies (UPSA)' },
     { id: '14', schoolId: '2', name: 'Student Hostel', schoolName: 'The University of Professional Studies (UPSA)' },
     { id: '21', schoolId: '2', name: 'Joe Hostel', schoolName: 'The University of Professional Studies (UPSA)' },
-    { id: '23', schoolId: '2', name: 'West End Hostel', schoolName: 'Pentecost University' },
+
+    { id: '23', schoolId: '1', name: 'Safo Hal', schoolName: 'Pentecost University' },
+    { id: '24', schoolId: '1', name: '⁠Yeboah Hall', schoolName: 'Pentecost University' },
+    { id: '25', schoolId: '1', name: '⁠Arnan Hall', schoolName: 'Pentecost University' },
+    { id: '26', schoolId: '1', name: '⁠Shockers Hostel', schoolName: 'Pentecost University' },
+    { id: '27', schoolId: '1', name: '⁠Choice Hostel', schoolName: 'Pentecost University' },
+    { id: '28', schoolId: '1', name: '⁠Villagio Hostel', schoolName: 'Pentecost University' },
   ];
 
-  const { state } = useLocation();
-  const schoolName = state?.schoolName || '';
+  // const { state } = useLocation();
+  // const schoolName = state?.schoolName || '';
+
+  const location = useLocation();
+  const { firstName, lastName, email, schoolName } = location.state as LocationState;
 
   const filteredHostels = hostels.filter(
     (hostel) =>

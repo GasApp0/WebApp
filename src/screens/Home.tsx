@@ -27,7 +27,7 @@ function Home() {
         display: 'flex',
         height: '100vh',
         flexDirection: 'column',
-        gap: isMobile ? '5%' : '10%',
+        gap: isMobile ? '5%' : '0%',
         // padding: isMobile ? '10px' : '0',
         // marginLeft : isMobile ? '12%' : '0'
       }}
@@ -50,6 +50,7 @@ function Home() {
           marginInline: isMobile ? '5%' : '0%',
           // backgroundColor : 'red',
           width : '50%',
+          marginTop : isMobile ? '30%' : "10%"
         
         }}
       >
@@ -77,7 +78,7 @@ function Home() {
             display: 'flex',
             gap: 24,
             flexDirection: isMobile ? 'column' : 'row',
-            width: isMobile ? '160%' : '100%',
+            width: isMobile ? '160%' : '120%',
             // backgroundColor : 'red'
           }}
         >
@@ -118,24 +119,28 @@ function Home() {
               <p
                 style={{
                   fontSize: 12,
-                  color: 'rgba(0,0,0,0.6)',
+                  color: '#ffffff70',
                   padding: 4,
-                  border: '1px solid rgba(0,0,0,0.1)',
+                  border: '1px solid #ffffff20',
                   borderRadius: 60,
-                  backgroundColor: 'white',
+                  backgroundColor: '#ffffff20',
                 }}
               >
                 Average{' '}
                 <span
                   style={{
-                    color: 'black',
+                    color: 'white',
                   }}
                 >
                   GH10 /fill
                 </span>
               </p>
             </div>
-            <div>
+            <div style={{
+              display : 'flex',
+              flexDirection  :'column',
+              gap : 8
+            }}>
               <p
                 style={{
                   fontWeight: '700',
@@ -147,7 +152,7 @@ function Home() {
               <p
                 style={{
                   color: '#ffffff80',
-                  fontSize: 12,
+                  fontSize: 14,
                 }}
               >
                 Enjoy the convenience of having your LPG cylinder delivered to

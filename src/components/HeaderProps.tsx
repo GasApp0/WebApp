@@ -62,6 +62,7 @@ const Header: React.FC<HeaderProps> = ({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+        position : 'fixed'
       }}
     >
       {/* Left Section: Logo and Navigation */}
@@ -187,7 +188,38 @@ const Header: React.FC<HeaderProps> = ({
               />
             </svg>
 
-            <div
+            {isMobile && (
+              <div
+              style={{
+                display: "flex",
+                gap: 12,
+                alignItems: "center",
+                padding: 10,
+                borderRadius: 12,
+                backgroundColor: "white",
+                border: "1px solid rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <p
+                style={{
+                  fontWeight: "700",
+                  fontSize: 12,
+                  borderRadius: "50%",
+                  backgroundColor: "black",
+                  color: "white",
+                  width: 28,
+                  height: 28,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {userInitials}
+              </p>
+            </div>
+            )}
+
+            {!isMobile && (<div
               style={{
                 display: "flex",
                 gap: 12,
@@ -215,7 +247,9 @@ const Header: React.FC<HeaderProps> = ({
                 {userInitials}
               </p>
               <p style={{ color: "black", fontWeight: "500" }}>{userName}</p>
-            </div>
+            </div>)}
+
+            
           </>
         )}
       </div>

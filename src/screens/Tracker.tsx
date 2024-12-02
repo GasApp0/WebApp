@@ -23,7 +23,7 @@ function Tracker() {
         flex: 1,
         alignItems: 'center',
         display: 'flex',
-        height: '100vh',
+        height: isMobile ? '80vh' : '100vh',
         flexDirection : 'column',
         gap: "4%"
       }}
@@ -44,6 +44,7 @@ function Tracker() {
            gap : 24,
            width : isMobile ?  380 : 313,
            alignItems: 'center',
+           marginTop : isMobile ? '30%' : "10%",
       }}>
         
         <div style={{

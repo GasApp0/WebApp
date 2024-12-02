@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import PrimaryButton from '../components/PrimaryButton';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-// Define the type for school options
+
 interface SchoolOptionProps {
   name: string;
   location: string;
   imageSrc: string;
-  isSelected: boolean; // Prop to indicate if this option is selected
+  isSelected: boolean; 
   onClick: () => void;
 }
+
+interface LocationState {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
 
 const SchoolOption: React.FC<SchoolOptionProps> = ({ name, location, imageSrc, isSelected, onClick }) => {
   return (
@@ -42,7 +50,8 @@ const SchoolOption: React.FC<SchoolOptionProps> = ({ name, location, imageSrc, i
 
 const SelectSchool = () => {
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const { firstName, lastName, email } = location.state as LocationState;
   // State to track if a school is selected
   const [selectedSchool, setSelectedSchool] = useState<string | null>(null);
 
@@ -59,17 +68,22 @@ const SelectSchool = () => {
     },
   ];
 
-  // Handle school selection
+
   const handleSchoolSelect = (schoolName: string) => {
-    setSelectedSchool(schoolName); // Set the selected school
+    setSelectedSchool(schoolName); 
   };
 
-  // Handle continue button click
+
   const handleContinue = () => {
     if (selectedSchool) {
-      // Pass the selected school to the next page using navigate
-      navigate('/SelectHostel', { state: { schoolName: selectedSchool } });
-      console.log(selectedSchool)
+      navigate('/SelectHostel', { state: { 
+        schoolName: selectedSchool,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+      } });
+     
+      console.log(email)
     }
   };
 

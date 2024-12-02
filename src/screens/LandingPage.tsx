@@ -4,6 +4,7 @@ import Header from '../components/HeaderProps';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as HeroImage } from './../../public/hero.svg'
 import ProgressBar from '../components/ProgressBar';
+// import { Link, Element } from 'react-scroll';
 
 
 function LandingPage() {
@@ -461,10 +462,10 @@ function LandingPage() {
         // left : '-5%'
       }}>
           <p style={{
-            fontSize : 40,
+            fontSize : isMobile? 30 :  40,
             fontWeight : '700',
             marginInline : isMobile ? '1%' : '20%',
-            textAlign : 'center'
+            textAlign : 'center',
           }}>Discover the Our <span style={{
             padding : 2,
             backgroundColor : 'rgba(0,0,0,0.6)',
@@ -1261,6 +1262,7 @@ function LandingPage() {
             flexDirection : 'column',
             alignItems : 'center',
             justifyContent : 'center',
+            marginTop : '10%'
           }}>
             <p style={{
               fontSize : 32,

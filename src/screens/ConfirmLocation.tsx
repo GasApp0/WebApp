@@ -4,6 +4,8 @@ import UPSA from './../../public/UPSA.png'
 import PUC from './../../public/Pentecost-University-College 1.png'
 import Header from './../components/HeaderProps'
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 
 function ConfirmLocation() {
 
@@ -18,9 +20,15 @@ function ConfirmLocation() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const location = useLocation();
+  const { size, price } = location.state || {};
+
 
   const handleContinue = () => {
-    navigate('/Amount'); 
+    console.log(`Selected Gas Details: Size - ${size}, Price - ${price}`);
+    // navigate('/Amount', ); 
+    navigate('/Amount', { state: { size: size, price: price, hostel : 'Suncity' } }); 
+
   };
 
   return (
@@ -29,9 +37,11 @@ function ConfirmLocation() {
         flex: 1,
         alignItems: 'center',
         display: 'flex',
-        height: '100vh',
+        // height: '100vh',
         flexDirection : 'column',
-        gap: "2%"
+        gap: "1%",
+        height: isMobile ? '80vh' : '180vh',
+
       }}
     >
 
@@ -48,11 +58,15 @@ function ConfirmLocation() {
            display: 'flex',
            flexDirection: 'column',
            alignItems : 'flex-start',
-           gap : 4,
+          //  gap : 12,
            width : isMobile ?  380 : 313,
            justifyContent : 'space-between',
-           height : isMobile ? '100%' : 0,
-           marginBottom : isMobile ? 30 : 0
+           height : isMobile ? '100%' : "60vh",
+          //  marginBottom : isMobile ? 20 : "15%",
+           marginTop : isMobile ? '30%' : "10%",
+          //  overflowY:  'auto' ,
+          // backgroundColor : 'red'
+
       }}>
 
 
@@ -167,7 +181,7 @@ function ConfirmLocation() {
       </div>
      </div>
 
-      <div style={{
+      {/* <div style={{
         width : '100%',
         display : 'flex',
         flexDirection : 'column',
@@ -240,9 +254,9 @@ function ConfirmLocation() {
             fontSize : 14
           }}>n/a</p>
         </div>
-          <PrimaryButtom title='Continue' onClick={handleContinue}/>
-      </div>
-
+         
+      </div> */}
+      <PrimaryButtom title='Continue' onClick={handleContinue}/>
 
       </div>
 
