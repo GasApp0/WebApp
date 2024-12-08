@@ -9,27 +9,27 @@ function App() {
   const [loading, setLoading] = useState(false); // Added state for loading
   const [verificationId, setVerificationId] = useState(null);
 
-  const BASE_CUSTOMER_URL = 'http://34.222.42.84/v1/customers'; // API URL
-
+  // const BASE_CUSTOMER_URL = 'http://34.222.42.84/v1/customers'; 
+  const BASE_CUSTOMER_URL = 'https://backend-node-0kx8.onrender.com'; 
   const isButtonDisabled = phoneNumber.length < 10; // Disable button if phone number is too short
 
   const requestOTP = async () => {
     if (!phoneNumber || phoneNumber.length < 10) {
-      alert('Please enter a valid phone number.'); // Use alert for the web
+      alert('Please enter a valid phone number.'); 
       return;
     }
 
-    setLoading(true); // Start loading
+    setLoading(true); 
 
     try {
-      const response = await fetch(`${BASE_CUSTOMER_URL}/request-otp/`, {
+      const response = await fetch(`${BASE_CUSTOMER_URL}/api/auth/sendOTP`, {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
+          // Accept: 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          phone_number: phoneNumber,
+          phoneNumber: phoneNumber,
           account_type: 'customer',
         }),
       });
@@ -37,19 +37,18 @@ function App() {
       const data = await response.json();
 
       if (response.ok) {
-        setVerificationId(data.verificationId); // Store the verification ID
-        navigate('OTP', { state: { verificationId: data.verificationId } }); // Pass verificationId in state
+        setVerificationId(data.verificationId); 
+        navigate('/OTP', { state: { verificationId: data.verificationId } }); 
         console.log(phoneNumber)
       } else {
-        alert('Could not send OTP. Please try again.'); // Show alert in case of failure
+        alert('Could not send OTP. Please try again.'); 
       }
     } catch (error) {
-      setLoading(false); // Stop loading
-      console.error('Error requesting OTP:', error); // Log the error
-      alert((error as Error).message || 'Could not send OTP.'); // Handle unknown error type
+      setLoading(false); 
+      console.error('Error requesting OTP:', error); 
+      alert((error as Error).message || 'Could not send OTP.'); 
     }
     // navigate('/OTP', { state: { phoneNumber } } );
-    console.log(phoneNumber)
   };
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
