@@ -12,6 +12,7 @@ function App() {
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
+  const isButtonDisabled = otp.length < 10; 
   
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -22,7 +23,7 @@ function App() {
 
   const handleOtpChange = (value: string, index: number) => {
     const newOtp = [...otp];
-    newOtp[index] = value.slice(-1); // Only take the last character
+    newOtp[index] = value.slice(-1);
     setOtp(newOtp);
   
     // Move focus to next or previous input
@@ -38,8 +39,8 @@ function App() {
 
   const handleContinue = async () => {
     const otpCode = otp.join('');
-    if (otpCode.length !== 6) {
-      setError('Please enter a valid 6-digit OTP');
+    if (otpCode.length !== 4) {
+      setError('Please enter a valid 4-digit OTP');
       return;
     }
 
@@ -68,7 +69,8 @@ function App() {
     } finally {
       setLoading(false);
     }
-    console.log('yay')
+
+
 
   };
 
@@ -79,7 +81,7 @@ function App() {
       flexDirection: 'column',
       alignItems: 'center',
       height: '100vh',
-      overflowY: 'auto', // Allow scrolling on small screens
+      overflowY: 'auto', 
       
     }}
   >
@@ -158,7 +160,7 @@ function App() {
 
         {error && <p style={{ color: 'red' }}>{error}</p>}
 
-        <PrimaryButton title="Continue" onClick={handleContinue} />
+        <PrimaryButton title="Continue" onClick={handleContinue} disabled={isButtonDisabled || loading} />
 
         <p className="w-[313px] text-center text-black/60 text-sm">
           An OTP code will be sent to your number for verification
