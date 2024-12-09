@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import PrimaryButton from '../components/PrimaryButton';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const BASE_CUSTOMER_URL = 'https://backend-node-0kx8.onrender.com'; 
   const [error, setError] = useState('')
   const [otp, setOtp] = useState(Array(4).fill(''))
   const [loading, setLoading] = useState(false)
+  const { verificationId, phoneNumber, prefix } = location.state || {};
+
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
-  const isButtonDisabled = otp.length < 10; 
+  const isButtonDisabled = otp.length < 4; 
   
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -52,7 +58,11 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ otp: otpCode }),
+        body: JSON.stringify({ 
+          code : otp,
+          prefix: 'GH',
+          requestId: verificationId,
+        }),
       });
 
       const data = await response.json();
@@ -62,6 +72,7 @@ function App() {
         console.log('yay')
       } else {
         setError(data.message || 'Failed to verify OTP. Please try again.');
+        console.log(otp )
       }
     } catch (err) {
       setError('An error occurred. Please try again later.');
