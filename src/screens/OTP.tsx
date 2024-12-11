@@ -3,175 +3,149 @@ import PrimaryButton from '../components/PrimaryButton';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
-  const BASE_CUSTOMER_URL = 'https://backend-node-0kx8.onrender.com'; 
-  const [error, setError] = useState('')
-  const [otp, setOtp] = useState(Array(4).fill(''))
-  const [loading, setLoading] = useState(false)
-  const { verificationId, phoneNumber, prefix } = location.state || {};
-
+  const BASE_CUSTOMER_URL = "https://backend-node-0kx8.onrender.com";
+  const [error, setError] = useState("");
+  const [otp, setOtp] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { requestId, prefix, phoneNumber } = location.state || {};
+  console.log(" OTP Page: ", requestId, prefix);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
-  const isButtonDisabled = otp.length < 4; 
-  
+  const isButtonDisabled = otp.length !== 4;
+
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleOtpChange = (value: string, index: number) => {
-    const newOtp = [...otp];
-    newOtp[index] = value.slice(-1);
-    setOtp(newOtp);
-  
-    // Move focus to next or previous input
-    if (value && index < otp.length - 1) {
-      const nextInput = document.getElementById(`otp-${index + 1}`) as HTMLInputElement;
-      if (nextInput) nextInput.focus();
-    } else if (!value && index > 0) {
-      const prevInput = document.getElementById(`otp-${index - 1}`) as HTMLInputElement;
-      if (prevInput) prevInput.focus();
+  const handleOtpChange = (value: string) => {
+    if (value.length <= 4) {
+      setOtp(value);
     }
   };
-  
 
   const handleContinue = async () => {
-    const otpCode = otp.join('');
-    if (otpCode.length !== 4) {
-      setError('Please enter a valid 4-digit OTP');
-      return;
-    }
-
+    setLoading(true);
     try {
-      setLoading(true);
-      setError('');
       const response = await fetch(`${BASE_CUSTOMER_URL}/api/auth/verifyOTP`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ 
-          code : otp,
-          prefix: 'GH',
-          requestId: verificationId,
+        body: JSON.stringify({
+          code: otp,
+          requestId: requestId,
+          prefix: prefix,
         }),
       });
 
       const data = await response.json();
+      console.log(data);
 
+      
       if (response.ok) {
-        navigate('/GeneralDetails'); 
-        console.log('yay')
+        navigate("/GeneralDetails", {
+          state : {
+            phoneNumber : phoneNumber
+          }
+        }); 
       } else {
-        setError(data.message || 'Failed to verify OTP. Please try again.');
-        console.log(otp )
+        setError(data.message || "OTP verification failed.");
       }
-    } catch (err) {
-      setError('An error occurred. Please try again later.');
-      console.log('nay')
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+      setError((error as Error).message || "OTP verification failed.");
     } finally {
       setLoading(false);
     }
-
-
-
   };
 
   return (
     <div
-    style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      height: '100vh',
-      overflowY: 'auto', 
-      
-    }}
-  >
-    <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        gap: 16,
-        width : isMobile ?  380 : 323,
-        marginTop :  '20vh',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        height: "100vh",
+        overflowY: "auto", // Allow scrolling on small screens
       }}
     >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          gap: 16,
+          width: isMobile ? 380 : 323,
+          marginTop: "20vh",
+        }}
+      >
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
           }}
         >
           <h1
             style={{
               fontSize: 28,
-              fontWeight: '700',
+              fontWeight: "700",
             }}
           >
-            OTP Verification
+            Enter OTP
           </h1>
           <p
             style={{
-              color: 'rgba(0,0,0,0.6)',
-              width: '313px',
+              color: "rgba(0,0,0,0.6)",
             }}
           >
-            Enter the verification code we just sent to your email address
+            An OTP code was sent to your number for verification
           </p>
         </div>
 
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            width: '100%',
-            gap: 2,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            width: "100%",
+            gap: 4,
           }}
         >
-          <div
+          <input
+            value={otp}
+            onChange={(e) => handleOtpChange(e.target.value)}
             style={{
-              gap: 4,
-              display: 'flex',
-              justifyContent : 'space-between',
-              width : '100%'
+              backgroundColor: "#D9D9D9",
+              alignSelf: "stretch",
+              padding: 8,
+              borderRadius: 12,
+              border: "1px solid rgba(0,0,0,0.1)",
+              width: "100%",
+              textAlign: "center",
+              fontSize: 24,
+              letterSpacing: 8,
             }}
-          >
-            {Array(4)
-              .fill(0)
-              .map((_, index) => (
-                <input
-                key={index}
-                id={`otp-${index}`}
-                value={otp[index]}
-                onChange={(e) => handleOtpChange(e.target.value, index)}
-                style={{
-                  backgroundColor: '#D9D9D9',
-                  alignSelf: 'stretch',
-                  padding: 8,
-                  borderRadius: 12,
-                  border: '1px solid rgba(0,0,0,0.1)',
-                  width: 50,
-                }}
-              />
-              ))}
-          </div>
+            maxLength={4}
+          />
         </div>
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <PrimaryButton title="Continue" onClick={handleContinue} disabled={isButtonDisabled || loading} />
+        <PrimaryButton
+          title={loading ? "Verifying..." : "Continue"}
+          onClick={handleContinue}
+          disabled={isButtonDisabled || loading}
+        />
 
         <p className="w-[313px] text-center text-black/60 text-sm">
           An OTP code will be sent to your number for verification

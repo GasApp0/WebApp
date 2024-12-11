@@ -16,6 +16,7 @@ interface LocationState {
   lastName: string;
   email: string;
   schoolName: string;
+  phoneNumber : string;
 }
 
 
@@ -25,6 +26,7 @@ interface HostelListProps {
   selectedHostel: Hostel | null; 
 }
 
+const BASE_CUSTOMER_URL = "https://backend-node-0kx8.onrender.com";
 const HostelList: React.FC<HostelListProps> = ({ searchQuery, onSelectHostel, selectedHostel }) => {
   const hostels = [
     { id: '10', schoolId: '2', name: 'Anodams Hostel', schoolName: 'The University of Professional Studies (UPSA)' },
@@ -118,12 +120,49 @@ const HostelList: React.FC<HostelListProps> = ({ searchQuery, onSelectHostel, se
 const SelectHostel: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedHostel, setSelectedHostel] = useState<Hostel | null>(null);
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  const handleContinue = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { firstName, lastName, email, phoneNumber, schoolName } = location.state || {};
+
+  const handleContinue = async () => {
     if (selectedHostel) {
-      console.log('Selected Hostel:', selectedHostel);
-      navigate('/Home'); // Pass hostel data if needed
+      const requestData = {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        schoolName,
+        hostelName: selectedHostel.name,
+      };
+
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `${BASE_CUSTOMER_URL}/api/auth/verifyOTP/auth/signup`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData),
+          });
+        // console.log('API Response:', requestData);
+
+        const responseData = await response.json()
+          const { token } = responseData
+
+          localStorage.setItem('authToken', token)
+
+        alert('Hostel selection submitted successfully!');
+        navigate('/Home');
+      } catch (error) {
+        console.error('API Error:', error);
+        alert('Failed to submit hostel selection. Please try again.');
+      } finally {
+        setLoading(false);
+      }
     } else {
       alert('Please select a hostel before continuing');
     }
@@ -131,16 +170,18 @@ const SelectHostel: React.FC = () => {
 
   const handleSelectHostel = (hostel: Hostel) => {
     setSelectedHostel(hostel);
+  
   };
 
+ 
   return (
-<div
+  <div
       style={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         height: '100vh',
-        overflowY: 'auto', // Allow scrolling on small screens
+        overflowY: 'auto', 
         marginBottom : 20
       }}
     >

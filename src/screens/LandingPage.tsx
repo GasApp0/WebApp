@@ -10,6 +10,8 @@ import ProgressBar from '../components/ProgressBar';
 function LandingPage() {
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const BASE_CUSTOMER_URL = "https://backend-node-0kx8.onrender.com";
+
 
   // Listener for screen size changes
   useEffect(() => {
@@ -19,10 +21,13 @@ function LandingPage() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+
   const handleContinue = () => {
     navigate('/SelectCylinder');
+ 
   };
 
+  
   return (
     <div
       style={{

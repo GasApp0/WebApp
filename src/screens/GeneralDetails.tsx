@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import PrimaryButton from '../components/PrimaryButton';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 
 function GeneralDetails() {
+  const location = useLocation();
   const navigate = useNavigate();
   const [firstName, setfirstName] = useState(''); 
   const [lastName, setlastName] = useState(''); 
   const [email, setEmail] = useState(''); 
+
+
+  const { phoneNumber } = location.state;
+
 
 
  const handleContinue = () => {
@@ -15,9 +22,10 @@ function GeneralDetails() {
         firstName: firstName,
         lastName: lastName,
         email: email,
+        phoneNumber : phoneNumber
       }
     });
-    console.log('Navigating with:', { firstName, lastName, email });
+    // console.log(phoneNumber);
   };
 
  

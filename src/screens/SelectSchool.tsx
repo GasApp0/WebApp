@@ -16,6 +16,7 @@ interface LocationState {
   firstName: string;
   lastName: string;
   email: string;
+  phoneNumber : string;
 }
 
 
@@ -51,8 +52,7 @@ const SchoolOption: React.FC<SchoolOptionProps> = ({ name, location, imageSrc, i
 const SelectSchool = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { firstName, lastName, email } = location.state as LocationState;
-  // State to track if a school is selected
+  const { firstName, lastName, email, phoneNumber } = location.state as LocationState;
   const [selectedSchool, setSelectedSchool] = useState<string | null>(null);
 
   const schools = [
@@ -81,9 +81,10 @@ const SelectSchool = () => {
         firstName: firstName,
         lastName: lastName,
         email: email,
+        phoneNumber : phoneNumber,
       } });
      
-      console.log(email)
+      // console.log(phoneNumber)
     }
   };
 
@@ -98,7 +99,7 @@ const SelectSchool = () => {
   }, []);
 
   return (
-<div
+    <div
       style={{
         display: 'flex',
         flexDirection: 'column',
