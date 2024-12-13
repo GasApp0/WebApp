@@ -33,15 +33,16 @@ function App() {
       });
 
       const data = await response.json();
-      console.log(data.data.data);
+      // console.log(data.data.data);
       const { prefix, requestId } = data.data.data || {};
-      console.log("Prefix:", prefix);
+      const userExists = data.userExists
+      console.log(userExists);
       // console.log("Request ID:", requestId);
       setVerificationId(data.requestId);
 
       if (response.ok) {
         navigate("/OTP", {
-          state: { requestId: requestId, phoneNumber, prefix },
+          state: { requestId: requestId, phoneNumber, prefix, userExists : userExists },
         });
       } else {
         alert("Could not send OTP. Please try again.");
@@ -50,7 +51,7 @@ function App() {
       console.error("Error requesting OTP:", error);
       alert((error as Error).message || "Could not send OTP.");
     } finally {
-      setLoading(false); // Ensure loading state is reset
+      setLoading(false); 
     }
   };
 

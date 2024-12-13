@@ -3,13 +3,15 @@ import PrimaryButton from '../components/PrimaryButton';
 import SecondaryButton from './../components/SecondaryButton';
 import Header from './../components/HeaderProps';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 
 function SelectCylinder() {
   const navigate = useNavigate();
+    const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [selectedCylinder, setSelectedCylinder] = useState({ size: '', price: '' });
 
-  // Listener for screen size changes
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);

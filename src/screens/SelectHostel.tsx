@@ -126,47 +126,53 @@ const SelectHostel: React.FC = () => {
   const location = useLocation();
   const { firstName, lastName, email, phoneNumber, schoolName } = location.state || {};
 
-  const handleContinue = async () => {
+  const handleContinue = () => {
     if (selectedHostel) {
-      const requestData = {
-        firstName,
-        lastName,
-        email,
-        phoneNumber,
-        schoolName,
-        hostelName: selectedHostel.name,
-      };
+      console.log("Selected Hostel:", selectedHostel);
+      const signup = fetch(`${BASE_CUSTOMER_URL}/api/auth/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          phoneNumber: phoneNumber,
+          email: email,
+          schoolName: schoolName,
+          hostelName: selectedHostel.name,
+        }),
+      });
 
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `${BASE_CUSTOMER_URL}/api/auth/verifyOTP/auth/signup`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestData),
-          });
-        // console.log('API Response:', requestData);
+      console.log(
+        "body",
+        JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          phoneNumber: phoneNumber,
+          email: email,
+          schoolName: schoolName,
+          hostelName: selectedHostel.name,
+        })
+      );
 
-        const responseData = await response.json()
-          const { token } = responseData
-
-          localStorage.setItem('authToken', token)
-
-        alert('Hostel selection submitted successfully!');
-        navigate('/Home');
-      } catch (error) {
-        console.error('API Error:', error);
-        alert('Failed to submit hostel selection. Please try again.');
-      } finally {
-        setLoading(false);
-      }
+      signup
+        .then((response) => {
+          if (response.ok) {
+            navigate("/Home");
+          } else {
+            alert("Could not sign up. Please try again.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error signing up:", error);
+          alert((error as Error).message || "Could not sign up.");
+        });
     } else {
-      alert('Please select a hostel before continuing');
+      alert("Please select a hostel before continuing");
     }
   };
+
 
   const handleSelectHostel = (hostel: Hostel) => {
     setSelectedHostel(hostel);

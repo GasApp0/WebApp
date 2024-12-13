@@ -12,8 +12,8 @@ function App() {
   const [error, setError] = useState("");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
-  const { requestId, prefix, phoneNumber } = location.state || {};
-  console.log(" OTP Page: ", requestId, prefix);
+  const { requestId, prefix, phoneNumber, userExists } = location.state || {};
+  console.log(userExists);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -48,15 +48,37 @@ function App() {
       });
 
       const data = await response.json();
-      console.log(data);
-
-      
       if (response.ok) {
-        navigate("/GeneralDetails", {
-          state : {
-            phoneNumber : phoneNumber
+        // Handle successful verification
+        console.log("OTP verified successfully:", data);
+
+        // redirect to dashboard or signup page based on userExists
+        if (userExists) {
+          const login = await fetch(`${BASE_CUSTOMER_URL}/api/auth/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              phoneNumber,
+            }),
+          });
+
+          const loginData = await login.json();
+          if (login.ok) {
+            console.log("Login successful:", loginData);
+            navigate("/home");
+          } else {
+            setError(loginData.message || "Login failed.");
+            return;
           }
-        }); 
+        } else {
+          navigate("/GeneralDetails", {
+            state: {
+              phoneNumber,
+            },
+          });
+        }
       } else {
         setError(data.message || "OTP verification failed.");
       }

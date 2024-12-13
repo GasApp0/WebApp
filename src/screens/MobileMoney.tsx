@@ -9,7 +9,42 @@ function MobileMoney() {
   const { size, price = 50, amount, total } = location.state || {};
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const [selectedNetwork, setSelectedNetwork] = useState(''); // New state for network selection
+  const [selectedNetwork, setSelectedNetwork] = useState(''); 
+  const [userData, setUserData] = useState<{ name: string; hostel: string } | null>(null); 
+  const [loading, setLoading] = useState(true);
+
+
+  const BASE_CUSTOMER_URL = "https://backend-node-0kx8.onrender.com";
+
+  // Fetching user data
+  useEffect(() => {
+
+    const fetchData = async () => {
+
+      try {
+        const response = await fetch(`${BASE_CUSTOMER_URL}/users/user`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          }
+        })
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch user data: ${response.status} ${response.statusText}`);
+        }
+  
+        const data = await response.json()
+        console.log("data")
+        setUserData(data)
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching user data', error)
+        setLoading(false)
+      }
+    }
+
+    fetchData();
+  }, [])
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -20,9 +55,43 @@ function MobileMoney() {
 
   const navigate = useNavigate();
 
-  const handleContinue = () => {
+// sending orders
+  const handleContinue = async() => {
     if (selectedNetwork) {
-      navigate('/Tracker', { state: { selectedNetwork } });
+      try {
+        const response = await fetch(`${BASE_CUSTOMER_URL}/orders/order`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            customerName: "Princess",
+            hostelName: "Bruce Tower",
+            orderAmount: amount,
+            schoolName: "MIT",
+            riderCommision: 10,
+            profit: 20
+          }),
+        })
+
+        const data = response.json()
+
+        if (response.ok) {
+          navigate('/Tracker', { state: { selectedNetwork } });
+          console.log('prince')
+        }
+        else {
+          alert("Could not send Order. Please try again.");
+        }
+
+      }
+      catch(error) {
+        console.error("Error sending Order", error);
+      }
+      finally {
+        setLoading(false); 
+      }
+      // navigate('/Tracker', { state: { selectedNetwork } });
     }
   };
 
