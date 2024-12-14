@@ -10,6 +10,8 @@ interface HeaderProps {
   onNotificationClick?: (item: string) => void;
 }
 
+
+
 const Header: React.FC<HeaderProps> = ({
   logoText = "APP",
   menuItems = [],
@@ -23,6 +25,9 @@ const Header: React.FC<HeaderProps> = ({
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [Name, setUserName] = useState("");
+  const [Initials, setUserInitials] = useState("");
+  
 
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 768);
@@ -35,6 +40,19 @@ const Header: React.FC<HeaderProps> = ({
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+   useEffect(() => {
+      const userData_ = JSON.parse(localStorage.getItem("userData") || "{}");
+      const userData = userData_.data || null;
+      if (userData && userData.firstName && userData.lastName) {
+        setUserName(`${userData.firstName} ${userData.lastName}`);
+        setUserInitials(`${userData.firstName[0]}${userData.lastName[0]}`);
+        // console.log(userName)
+      } else {
+        navigate("/");
+      }
+    }, [navigate]);
+  
 
   const handleMenuClick = (item: string) => {
     if (item === "Home") {
@@ -244,9 +262,9 @@ const Header: React.FC<HeaderProps> = ({
                   justifyContent: "center",
                 }}
               >
-                {userInitials}
+                {Initials}
               </p>
-              <p style={{ color: "black", fontWeight: "500" }}>{userName}</p>
+              <p style={{ color: "black", fontWeight: "500" }}>{Name}</p>
             </div>)}
 
             

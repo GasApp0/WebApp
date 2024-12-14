@@ -144,22 +144,48 @@ const SelectHostel: React.FC = () => {
         }),
       });
 
-      console.log(
-        "body",
-        JSON.stringify({
-          firstName: firstName,
-          lastName: lastName,
-          phoneNumber: phoneNumber,
-          email: email,
-          schoolName: schoolName,
-          hostelName: selectedHostel.name,
-        })
-      );
+      // console.log(
+      //   "body",
+      //   JSON.stringify({
+      //     firstName: firstName,
+      //     lastName: lastName,
+      //     phoneNumber: phoneNumber,
+      //     email: email,
+      //     schoolName: schoolName,
+      //     hostelName: selectedHostel.name,
+      //   })
+      // );
 
       signup
         .then((response) => {
           if (response.ok) {
-            navigate("/Home");
+            // send a fetch request to the backend to login using the new phone number and store the userdetails in local storage
+            const login = fetch(`${BASE_CUSTOMER_URL}/api/auth/login`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                phoneNumber,
+              }),
+            });
+
+            login
+              .then((response) => {
+                if (response.ok) {
+                  response.json().then((data) => {
+                    console.log("Login response:", data);
+                    localStorage.setItem("userData", JSON.stringify(data));
+                  });
+                  navigate("/Home");
+                } else {
+                  alert("Could not sign up. Please try again.");
+                }
+              })
+              .catch((error) => {
+                console.error("Error signing up:", error);
+                alert((error as Error).message || "Could not sign up.");
+              });
           } else {
             alert("Could not sign up. Please try again.");
           }

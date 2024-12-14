@@ -12,39 +12,56 @@ function MobileMoney() {
   const [selectedNetwork, setSelectedNetwork] = useState(''); 
   const [userData, setUserData] = useState<{ name: string; hostel: string } | null>(null); 
   const [loading, setLoading] = useState(true);
+  const [hostel, setHostel] = useState("")
+  const [userName, setUserName] = useState("");
+  const [school, setSchoolName] = useState("");
 
 
   const BASE_CUSTOMER_URL = "https://backend-node-0kx8.onrender.com";
 
   // Fetching user data
-  useEffect(() => {
+  // useEffect(() => {
 
-    const fetchData = async () => {
+  //   const fetchData = async () => {
 
-      try {
-        const response = await fetch(`${BASE_CUSTOMER_URL}/users/user`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          }
-        })
+  //     try {
+  //       const response = await fetch(`${BASE_CUSTOMER_URL}/users/user`, {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         }
+  //       })
 
-        if (!response.ok) {
-          throw new Error(`Failed to fetch user data: ${response.status} ${response.statusText}`);
-        }
+  //       if (!response.ok) {
+  //         throw new Error(`Failed to fetch user data: ${response.status} ${response.statusText}`);
+  //       }
   
-        const data = await response.json()
-        console.log("data")
-        setUserData(data)
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching user data', error)
-        setLoading(false)
-      }
-    }
+  //       const data = await response.json()
+  //       console.log("data")
+  //       setUserData(data)
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error('Error fetching user data', error)
+  //       setLoading(false)
+  //     }
+  //   }
 
-    fetchData();
-  }, [])
+  //   fetchData();
+  // }, [])
+
+      useEffect(() => {
+        const userData_ = JSON.parse(localStorage.getItem("userData") || "{}");
+        const userData = userData_.data || null;
+        if (userData && userData.hostelName &&  userData.firstName && userData.lastName && userData.schoolName) {
+          setUserName(`${userData.firstName} ${userData.lastName}`);
+          setHostel(`${userData.hostelName}`)
+          setSchoolName(`${userData.schoolName}`)
+
+          // console.log(hostel)
+        } else {
+          navigate("/");
+        }
+      }, []);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -59,22 +76,23 @@ function MobileMoney() {
   const handleContinue = async() => {
     if (selectedNetwork) {
       try {
-        const response = await fetch(`${BASE_CUSTOMER_URL}/orders/order`, {
+        const response = await fetch(`${BASE_CUSTOMER_URL}/order/order`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            customerName: "Princess",
-            hostelName: "Bruce Tower",
+            customerName: userName,
+            hostelName: hostel,
             orderAmount: amount,
-            schoolName: "MIT",
+            schoolName: school,
             riderCommision: 10,
             profit: 20
           }),
         })
 
         const data = response.json()
+        console.log(data)
 
         if (response.ok) {
           navigate('/Tracker', { state: { selectedNetwork } });

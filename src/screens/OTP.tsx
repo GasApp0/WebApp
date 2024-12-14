@@ -67,6 +67,7 @@ function App() {
           const loginData = await login.json();
           if (login.ok) {
             console.log("Login successful:", loginData);
+            localStorage.setItem("userData", JSON.stringify(loginData));
             navigate("/home");
           } else {
             setError(loginData.message || "Login failed.");

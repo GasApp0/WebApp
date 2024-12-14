@@ -27,6 +27,14 @@ function LandingPage() {
  
   };
 
+  useEffect(() =>{
+    const userData = JSON.parse(localStorage.getItem('userData') || "{}" ) 
+
+    if (userData.data) {
+      navigate("/home")
+    }
+  }, [navigate])
+
   
   return (
     <div

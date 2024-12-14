@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 function Home() {
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [userName, setUserName] = useState("");
+  const [userInitials, setUserInitials] = useState("");
 
   // Listener for screen size changes
   useEffect(() => {
@@ -18,6 +20,18 @@ function Home() {
   const handleContinue = () => {
     navigate('/SelectCylinder');
   };
+
+  useEffect(() => {
+    const userData_ = JSON.parse(localStorage.getItem("userData") || "{}");
+    const userData = userData_.data || null;
+    if (userData && userData.firstName && userData.lastName) {
+      setUserName(`${userData.firstName} ${userData.lastName}`);
+      setUserInitials(`${userData.firstName[0]}${userData.lastName[0]}`);
+      // console.log(userName)
+    } else {
+      navigate("/");
+    }
+  }, [navigate]);
 
   return (
     <div
