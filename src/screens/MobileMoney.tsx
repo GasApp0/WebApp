@@ -15,6 +15,7 @@ function MobileMoney() {
   const [hostel, setHostel] = useState("")
   const [userName, setUserName] = useState("");
   const [school, setSchoolName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState('')
 
 
   const BASE_CUSTOMER_URL = "https://backend-node-0kx8.onrender.com";
@@ -52,10 +53,12 @@ function MobileMoney() {
       useEffect(() => {
         const userData_ = JSON.parse(localStorage.getItem("userData") || "{}");
         const userData = userData_.data || null;
-        if (userData && userData.hostelName &&  userData.firstName && userData.lastName && userData.schoolName) {
+        if (userData && userData.hostelName &&  userData.firstName && userData.lastName && userData.schoolName && userData.phoneNumber) {
           setUserName(`${userData.firstName} ${userData.lastName}`);
           setHostel(`${userData.hostelName}`)
           setSchoolName(`${userData.schoolName}`)
+          setPhoneNumber(`${userData.phoneNumber}`)
+          // setSize(`${userData.size}`)
 
           // console.log(hostel)
         } else {
@@ -73,30 +76,33 @@ function MobileMoney() {
   const navigate = useNavigate();
 
 // sending orders
-  const handleContinue = async() => {
+  const handleContinue = async () => {  
+
     if (selectedNetwork) {
       try {
-        const response = await fetch(`${BASE_CUSTOMER_URL}/order/order`, {
+        const response = await fetch(`${BASE_CUSTOMER_URL}/api/orders/order`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
             customerName: userName,
-            hostelName: hostel,
-            orderAmount: amount,
             schoolName: school,
+            orderAmount: amount,
+            size: size,
+            hostelName: hostel,
+            phoneNumber: phoneNumber,
             riderCommision: 10,
-            profit: 20
-          }),
+            profit: 20,
+          })
         })
 
-        const data = response.json()
-        console.log(data)
+        // const data = response.json()
+        console.log(response)
 
         if (response.ok) {
           navigate('/Tracker', { state: { selectedNetwork } });
-          console.log('prince')
+          console.log(size)
         }
         else {
           alert("Could not send Order. Please try again.");
