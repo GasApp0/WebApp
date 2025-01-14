@@ -38,7 +38,7 @@ root.render(
         <Route path="/ConfirmLocation" element={<ConfirmLocation />} />
         <Route path="/amount" element={<Amount />} />
         <Route path="/MobileMoney" element={<MobileMoney />} />
-        <Route path="/tracker" element={<Tracker />} />
+        <Route path="/Tracker" element={<Tracker />} />
       </Routes>
     </Router>
   </React.StrictMode>
