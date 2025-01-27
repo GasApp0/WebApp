@@ -58,6 +58,7 @@ const HostelList: React.FC<HostelListProps> = ({ searchQuery, onSelectHostel, se
     { id: '26', schoolId: '1', name: '⁠Shockers Hostel', schoolName: 'Pentecost University' },
     { id: '27', schoolId: '1', name: '⁠Choice Hostel', schoolName: 'Pentecost University' },
     { id: '28', schoolId: '1', name: '⁠Villagio Hostel', schoolName: 'Pentecost University' },
+    { id: '29', schoolId: '3', name: 'St. Thersa', schoolName: 'KNUST' },
   ];
 
   // const { state } = useLocation();

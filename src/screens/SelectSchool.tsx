@@ -66,6 +66,11 @@ const SelectSchool = () => {
       location: 'Sowutuom, Greater Accra Region',
       imageSrc: '/Pentecost-University-College 1.png',
     },
+    {
+      name: 'Kwame Nkrumah University Of Science And Technology',
+      location: 'Kumasi',
+      imageSrc: '/Pentecost-University-College 1.png',
+    },
   ];
 
 
