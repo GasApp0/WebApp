@@ -21,37 +21,7 @@ function MobileMoney() {
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const BASE_CUSTOMER_URL = "https://backend-node-0kx8.onrender.com";
-  // const BASE_CUSTOMER_URL = "http://localhost:3003";
 
-  // Fetching user data
-  // useEffect(() => {
-
-  //   const fetchData = async () => {
-
-  //     try {
-  //       const response = await fetch(`${BASE_CUSTOMER_URL}/users/user`, {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         }
-  //       })
-
-  //       if (!response.ok) {
-  //         throw new Error(`Failed to fetch user data: ${response.status} ${response.statusText}`);
-  //       }
-
-  //       const data = await response.json()
-  //       console.log("data")
-  //       setUserData(data)
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.error('Error fetching user data', error)
-  //       setLoading(false)
-  //     }
-  //   }
-
-  //   fetchData();
-  // }, [])
 
   useEffect(() => {
     const userData_ = JSON.parse(localStorage.getItem("userData") || "{}");
@@ -98,6 +68,7 @@ function MobileMoney() {
           phoneNumber: phoneNumber,
           riderCommision: 10,
           profit: 20,
+          orderStatus: "pending"
         };
         console.log("Request Payload:", payload);
 
@@ -116,6 +87,22 @@ function MobileMoney() {
 
         const responseData = await response.json();
         console.log("Response:", responseData);
+
+        const userData = JSON.parse(localStorage.getItem("userData") || "{}")
+        const currentOrders = userData?.orders || []
+
+        const newOrder = {
+          orderID : responseData.data._id,
+          network : selectedNetwork,
+          ...payload
+        }
+
+        const updatedUserData = {
+          ...userData,
+          orders : [...currentOrders,newOrder]
+        }
+
+        localStorage.setItem("userData", JSON.stringify(updatedUserData))
 
         // If successful, navigate to tracker
         navigate("/Tracker", {

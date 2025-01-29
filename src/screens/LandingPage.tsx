@@ -27,13 +27,21 @@ function LandingPage() {
  
   };
 
-  useEffect(() =>{
-    const userData = JSON.parse(localStorage.getItem('userData') || "{}" ) 
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem('userData') || "{}");
 
-    if (userData.data) {
-      navigate("/home")
+    if (userData?.data) {
+      // Check if the user has orders
+      const hasOrders = userData.data.newUser?.orders?.length > 0;
+
+      if (hasOrders) {
+        navigate("/tracker");
+        console.log('yes')
+      } else {
+        navigate("/home");
+      }
     }
-  }, [navigate])
+  }, [navigate]);
 
   
   return (

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import PrimaryButtom from '../components/PrimaryButton'
-import UPSA from './../../public/UPSA.png'
-import PUC from './../../public/Pentecost-University-College 1.png'
 import ProgressBar from '../components/ProgressBar';
 import Header from './../components/HeaderProps'
+import { useNavigate } from 'react-router-dom';
+
 
 function Tracker() {
-
+  const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [status, setStatus] =useState("")
 
   // Listener for screen size changes
   useEffect(() => {
@@ -16,6 +17,19 @@ function Tracker() {
 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() =>{
+    const userData = JSON.parse(localStorage.getItem("userData") || "{}")
+    const currentOrders = userData?.orders || []
+  
+    // console.log(status)
+
+    setStatus(currentOrders[0]?.orderStatus)
+  }, [])
+
+  
+
+  
 
   return (
     <div
@@ -140,8 +154,8 @@ function Tracker() {
                  <p style={{
                   fontSize : 12,
                   color : 'rgba(0,0,0,0.6)'
-                }}>Arriving in 5 minutes</p>
-               <ProgressBar progress={32}/>
+                }}>Arriving in 15 to 30 minutes</p>
+               <ProgressBar progress={ status === "pending" ? 0 : 0}/>
             </div>
             
         </div>
@@ -237,8 +251,8 @@ function Tracker() {
                  <p style={{
                   fontSize : 12,
                   color : 'rgba(0,0,0,0.6)'
-                }}>Arriving in 5 minutes</p>
-               <ProgressBar progress={32}/>
+                }}>n/a</p>
+               <ProgressBar progress={status === "pending" ? 0 : 0}/>
             </div>
             
         </div> 

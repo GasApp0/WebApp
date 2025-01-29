@@ -8,6 +8,7 @@ function Home() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [userName, setUserName] = useState("");
   const [userInitials, setUserInitials] = useState("");
+  const [status, setStatus] = useState("")
 
   // Listener for screen size changes
   useEffect(() => {
@@ -16,6 +17,20 @@ function Home() {
 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem('userData') || "{}");
+
+    if (userData?.data) {
+      // Check if the user has orders
+      const hasOrders = userData?.orders?.length > 0;
+
+      if (hasOrders) {
+        navigate("/Tracker");
+        console.log("userData")
+      } 
+    }
+  }, [navigate]);
 
   const handleContinue = () => {
     navigate('/SelectCylinder');
