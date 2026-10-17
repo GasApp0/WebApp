@@ -44,10 +44,11 @@ const Header: React.FC<HeaderProps> = ({
    useEffect(() => {
       const userData_ = JSON.parse(localStorage.getItem("userData") || "{}");
       const userData = userData_.data || null;
-      if (userData && userData.firstName && userData.lastName) {
-        setUserName(`${userData.firstName} ${userData.lastName}`);
-        setUserInitials(`${userData.firstName[0]}${userData.lastName[0]}`);
-        // console.log(userName)
+      if (userData) {
+        const firstName = userData.firstName || "";
+        const lastName = userData.lastName || "";
+        setUserName(`${firstName} ${lastName}`.trim());
+        setUserInitials(`${firstName[0] || ""}${lastName[0] || ""}`);
       } else {
         navigate("/");
       }
@@ -163,7 +164,7 @@ const Header: React.FC<HeaderProps> = ({
               fontWeight: "700",
               cursor: "pointer",
             }}
-            onClick={() => navigate("/PhoneNumber")} // Navigate to the Sign Up page
+            onClick={() => navigate("/home")} // Navigate to Home, where sign up happens
             onMouseEnter={(e) =>
               (e.currentTarget.style.backgroundColor = "#ffffff60")
             }

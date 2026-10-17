@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 
 function MobileMoney() {
   const location = useLocation();
-  const { size, price = 50, amount, total } = location.state || {};
+  const { size, price = 50, amount, total, hostel: hostelFromState } = location.state || {};
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [selectedNetwork, setSelectedNetwork] = useState("");
@@ -20,27 +20,14 @@ function MobileMoney() {
   const [school, setSchoolName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const BASE_CUSTOMER_URL = "https://backend-node-0kx8.onrender.com";
-
-
   useEffect(() => {
     const userData_ = JSON.parse(localStorage.getItem("userData") || "{}");
     const userData = userData_.data || null;
-    if (
-      userData &&
-      userData.hostelName &&
-      userData.firstName &&
-      userData.lastName &&
-      userData.schoolName &&
-      userData.phoneNumber
-    ) {
-      setUserName(`${userData.firstName} ${userData.lastName}`);
-      setHostel(`${userData.hostelName}`);
-      setSchoolName(`${userData.schoolName}`);
-      setPhoneNumber(`${userData.phoneNumber}`);
-      // setSize(`${userData.size}`)
-
-      // console.log(hostel)
+    if (userData) {
+      setUserName(`${userData.firstName || ""} ${userData.lastName || ""}`.trim());
+      setHostel(hostelFromState || "");
+      setSchoolName(`${userData.schoolName || ""}`);
+      setPhoneNumber(`${userData.phoneNumber || ""}`);
     } else {
       navigate("/");
     }
@@ -56,6 +43,7 @@ function MobileMoney() {
   const navigate = useNavigate();
 
   // sending orders
+  // Backend disabled: mock order creation locally instead of calling the API.
   const handleContinue = async () => {
     if (selectedNetwork) {
       try {
@@ -72,27 +60,16 @@ function MobileMoney() {
         };
         console.log("Request Payload:", payload);
 
-        const response = await fetch(`${BASE_CUSTOMER_URL}/api/orders/order`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        });
+        await new Promise((resolve) => setTimeout(resolve, 500));
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error("Error Response:", errorData);
-        }
-
-        const responseData = await response.json();
-        console.log("Response:", responseData);
+        const orderId = `mock-${Date.now()}`;
+        const responseData = { data: { _id: orderId } };
 
         const userData = JSON.parse(localStorage.getItem("userData") || "{}")
         const currentOrders = userData?.orders || []
 
         const newOrder = {
-          orderID : responseData.data._id,
+          orderID : orderId,
           network : selectedNetwork,
           ...payload
         }
@@ -108,7 +85,7 @@ function MobileMoney() {
         navigate("/Tracker", {
           state: {
             selectedNetwork,
-            orderId: responseData.data._id,
+            orderId,
             ...responseData,
           },
         });

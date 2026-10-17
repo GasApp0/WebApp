@@ -1,0 +1,67 @@
+.map-pin-icon {
+  background: transparent;
+  border: none;
+}
+
+.map-pin-icon svg {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
+}
+
+.user-location-marker {
+  background: transparent;
+  border: none;
+}
+
+.user-location-marker .dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #0088ff;
+  border: 3px solid white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}
+
+.user-location-marker .pulse {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: rgba(0, 136, 255, 0.35);
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: map-pulse 1.8s ease-out infinite;
+}
+
+@keyframes map-pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.map-locate-control {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.map-locate-control:hover {
+  background-color: #fafafa;
+}

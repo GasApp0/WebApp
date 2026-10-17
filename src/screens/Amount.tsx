@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PrimaryButtom from '../components/PrimaryButton';
-import Header from './../components/HeaderProps';
+import { ArrowLeft } from '@phosphor-icons/react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 function Amount() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { size, price = 50, } = location.state || {};
+  const { size, price = 50, hostel } = location.state || {};
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [amount, setAmount] = useState(50); // Default amount in GHC
@@ -25,7 +25,7 @@ function Amount() {
 
 
   const handleContinue = () => {
-    navigate('/MobileMoney', { state: { size: size, price: price , amount : amount, total : total } });
+    navigate('/MobileMoney', { state: { size: size, price: price , amount : amount, total : total, hostel } });
   };
 
   const handleSliderChange = (value: any) => {
@@ -54,34 +54,54 @@ function Amount() {
   return (
     <div
       style={{
-        flex: 1,
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'column',
-        gap: isMobile ? '4%' : '10%',
-        height: isMobile ? '84vh' : '100vh',
+        height: '100dvh',
       }}
     >
-      <Header
-        logoText="APP"
-        menuItems={["Home", "Orders", "Contact Us"]}
-        userName="Christine Austin"
-        userInitials="CA"
-        onMenuClick={(item) => alert(`Clicked on ${item}`)}
-        onNotificationClick={() => alert('Notifications clicked')}
-      />
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+          padding: '16px 0',
+          borderBottom: '1px solid rgba(0,0,0,0.08)',
+        }}
+      >
+        <div
+          onClick={() => navigate(-1)}
+          style={{
+            position: 'absolute',
+            left: isMobile ? 16 : '5%',
+            width: 32,
+            height: 32,
+            borderRadius: 10,
+            backgroundColor: '#FAFAFA',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+          }}
+        >
+          <ArrowLeft size={16} weight="bold" color="black" />
+        </div>
+        <p style={{ fontSize: 16, fontWeight: 700 }}>Amount</p>
+      </div>
 
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
-          gap: 4,
+          justifyContent: 'space-between',
+          flex: 1,
           width: isMobile ? 380 : 313,
-          // justifyContent: 'space-between',
-          height: isMobile ? '100%' : 0,
-          marginBottom: isMobile ? 30 : '10%',
-          marginTop: isMobile ? '24%' : '8%',
+          overflowY: 'auto',
+          paddingTop: isMobile ? '6%' : '4%',
+          paddingBottom: 20,
         }}
       >
         <div
@@ -92,15 +112,6 @@ function Amount() {
             width: '100%',
           }}
         >
-          <h1
-            style={{
-              fontSize: 28,
-              fontWeight: '700',
-            }}
-          >
-            Amount
-          </h1>
-
           <div
             style={{
               display: 'flex',
@@ -252,7 +263,7 @@ function Amount() {
             borderRadius: 24,
             border: '1px solid rgba(0,0,0,0.2)',
             paddingTop: 16,
-            marginTop: 64,
+            flexShrink: 0,
           }}
         >
           <p
@@ -276,7 +287,7 @@ function Amount() {
                 color: 'rgba(0, 0, 0, 0.50)',
               }}
             >
-              Regular Offer
+              Regular
             </p>
             <p
               style={{
@@ -374,7 +385,7 @@ function Amount() {
               </p>
             </div>
           </div>
-          <PrimaryButtom title="Continue" onClick={handleContinue} disabled={isButtonDisabled} />
+          <PrimaryButtom title="Make Payment" onClick={handleContinue} disabled={isButtonDisabled} />
         </div>
 
         

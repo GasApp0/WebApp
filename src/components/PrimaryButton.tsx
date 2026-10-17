@@ -10,7 +10,7 @@ interface CustomButtonProps {
 const CustomButton: React.FC<CustomButtonProps> = ({ title, width = "w-full", onClick, disabled = false }) => {
   return (
     <button
-      className={`bg-black text-white py-3 px-3 rounded-3xl hover:bg-black/80 transition ${width} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+      className={`bg-black text-white py-3 px-3 rounded-full hover:bg-black/80 transition ${width} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
       onClick={onClick}  // Attach the onClick handler
       disabled={disabled} // Set the disabled attribute based on the prop
     >

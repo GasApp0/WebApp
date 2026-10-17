@@ -1,9 +1,14 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from './screens/phoneNumber';
+import { MemoryRouter } from 'react-router-dom';
+import Home from './screens/Home';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('renders home page', () => {
+  render(
+    <MemoryRouter>
+      <Home />
+    </MemoryRouter>
+  );
+  const heading = screen.getByText(/Cylinder Size/i);
+  expect(heading).toBeInTheDocument();
 });

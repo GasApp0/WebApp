@@ -10,7 +10,6 @@ import ProgressBar from '../components/ProgressBar';
 function LandingPage() {
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const BASE_CUSTOMER_URL = "https://backend-node-0kx8.onrender.com";
 
 
   // Listener for screen size changes
@@ -23,27 +22,10 @@ function LandingPage() {
 
 
   const handleContinue = () => {
-    navigate('/SelectCylinder');
- 
+    navigate('/home');
+
   };
 
-  useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem('userData') || "{}");
-
-    if (userData?.data) {
-      // Check if the user has orders
-      const hasOrders = userData.data.newUser?.orders?.length > 0;
-
-      if (hasOrders) {
-        navigate("/tracker");
-        console.log('yes')
-      } else {
-        navigate("/home");
-      }
-    }
-  }, [navigate]);
-
-  
   return (
     <div
       style={{
@@ -145,7 +127,7 @@ function LandingPage() {
             onMouseLeave={(e) =>
               (e.currentTarget.style.backgroundColor = 'black')
             }
-            onClick={() => navigate("/PhoneNumber")} // Navigate to the Sign Up page
+            onClick={() => navigate("/home")} // Navigate to Home, where sign up happens
           >
             Get Started
           </button>
